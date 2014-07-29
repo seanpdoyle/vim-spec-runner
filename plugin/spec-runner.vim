@@ -10,6 +10,11 @@ if ! exists('g:spec_runner_dispatcher')
   let g:spec_runner_dispatcher = '!echo "{command}" && {command}'
 endif
 
+function! s:RunSuite()
+  let command_string = "!" + s:Runner()
+  execute command_string
+endfunction
+
 function! s:RunCurrentSpecFile()
   call s:RunIfInSpecFile(s:UNFOCUSED)
 endfunction
@@ -186,11 +191,13 @@ endfunction
 command! RunCurrentSpecFile call s:RunCurrentSpecFile()
 command! RunFocusedSpec call s:RunFocusedSpec()
 command! RunMostRecentSpec call s:RunMostRecentSpec()
+command! RunSuite call s:RunSuite()
 
 " Define plug mappings (essentially place holders, not actually bound to keys)
 nnoremap <silent> <Plug>RunCurrentSpecFile :RunCurrentSpecFile<CR>
 nnoremap <silent> <Plug>RunFocusedSpec :RunFocusedSpec<CR>
 nnoremap <silent> <Plug>RunMostRecentSpec :RunMostRecentSpec<CR>
+nnoremap <silent> <Plug>RunSuite :RunSuite<CR>
 
 " Default key mappings
 call s:MapIfUnmapped('a', '<Plug>RunCurrentSpecFile')
